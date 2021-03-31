@@ -26,6 +26,10 @@ h1 {
 	
 }
 
+#groups >h2 {
+	padding:0.5rem 1rem 0;
+}
+
 .group {
 	display:inline-block;
 	
