@@ -84,9 +84,11 @@ function refreshStats(cb) {
 		return;
 	}
 	
+	let toRefreshs = {};
 	let stats = {};
 	for(let i=1;i<=24;++i) {
 		let h = new Date(date-3600000*i).toISOString().substr(0,13);
+		toRefreshs[h] = !storedStats[h];
 		stats[h] = storedStats[h] || {};
 	}
 	
@@ -98,7 +100,7 @@ function refreshStats(cb) {
 		
 		response.nfts.forEach((item)=>{
 			let h = item.purchaseTs.substr(0,13);
-			if(!stats[h]) return;
+			if(!toRefreshs[h]) return;
 			
 			let group = item.groupTokenId;
 			stats[h][group] ||= {cnt:0, volume:0};
