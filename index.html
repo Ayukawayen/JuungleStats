@@ -1,0 +1,29 @@
+<html> 
+	<head> 
+		<title>Juungle Stats</title> 
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZGDDMHJE3"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'G-0ZGDDMHJE3');
+		</script>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		
+	</head>
+	<body>
+		<h1>Juungle Stats</h1>
+		<div id="groups">
+			<group-item class="group" v-for="group in groups" v-bind:group="group">
+			</group-item>
+		</div>
+	</body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script type="text/javascript" src="js/script.js"></script>
