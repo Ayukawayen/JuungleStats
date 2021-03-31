@@ -39,9 +39,6 @@ function zerofill(str, n) {
 
 
 
-
-//var groups = [];
-
 refreshStats(onStatsRefreshed);
 
 function onStatsRefreshed(stats) {
