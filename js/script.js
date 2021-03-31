@@ -52,7 +52,7 @@ function onStatsRefreshed(stats) {
 		for(let g in stats[h]) {
 			gStats[g] ||= {groupId:g, cnt:0, volume:0, images:['','','','']};
 			
-			++gStats[g].cnt;
+			gStats[g].cnt += stats[h][g].cnt;
 			gStats[g].volume += stats[h][g].volume;
 		}
 	}
