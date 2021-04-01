@@ -47,7 +47,7 @@ function onStatsRefreshed(stats) {
 	let gStats = {};
 	for(let h in stats) {
 		for(let g in stats[h]) {
-			gStats[g] ||= {groupId:g, cnt:0, volume:0, items:[]};
+			gStats[g] ||= {groupId:g, cnt:0, volume:0, items:[{},{},{},{},]};
 			
 			gStats[g].cnt += stats[h][g].cnt;
 			gStats[g].volume += stats[h][g].volume;
@@ -65,7 +65,7 @@ function onStatsRefreshed(stats) {
 	
 	groups.forEach((group)=>{
 		getItemsByGroup(group.groupId, (response)=>{
-			group.items = [];
+			group.items = [{},{},{},{},];
 			for(let i=0; i<4; ++i) {
 				if(i >= response.nfts.length) {
 					group.items[i] = {
