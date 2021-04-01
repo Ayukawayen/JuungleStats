@@ -15,10 +15,12 @@ Vue.component('group-item', {
 	props: ['group'],
 	template: `
 		<a class="group" :href="group.groupId | href">
-			<div class="volume"><span class="label">Last 24hrs: </span>{{ group.volume | volume}} BCH</div>
+			<div class="volume"><span class="label">Last 24hrs: </span>{{ group.volume | bch}} BCH</div>
 			<div class="cnt">/ {{ group.cnt }} trades</div>
 			<div class="images">
-				<span class="image" v-for="item in group.items" :style="{ 'background-image': 'url(' + item.image + ')' }" :title="item.symbol" />
+				<span class="image" v-for="item in group.items" :style="{ 'background-image': 'url(' + item.image + ')' }" :title="item.symbol">
+					<span class="price">{{ item.price | price}}</span>
+				</span>
 			</div>
 		</a>
 	`,
@@ -26,8 +28,12 @@ Vue.component('group-item', {
 		href: function(value) {
 			return 'https://www.juungle.net/#/collections/' + value;
 		},
-		volume: function(value) {
+		bch: function(value) {
 			return Math.floor(value/100000000) + '.' + zerofill(''+value%100000000, 8);
+		},
+		price: function(value) {
+			if(!value || value <= 0) return '';
+			return '₿ ' + Math.floor(value/100000000) + '.' + zerofill(''+value%100000000, 8);
 		},
 	},
 })
@@ -71,12 +77,14 @@ function onStatsRefreshed(stats) {
 					group.items[i] = {
 						image:'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==',
 						symbol:'',
+						price:0,
 					};
 					continue;
 				}
 				group.items[i] = {
 					image:`https://www.juungle.net/api/v1/nfts/icon/${group.groupId}/${response.nfts[i].tokenId}`,
 					symbol:response.nfts[i].tokenSymbol,
+					price:response.nfts[i].priceSatoshis,
 				};
 			}
 		});
