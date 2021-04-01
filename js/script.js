@@ -47,7 +47,7 @@ function onStatsRefreshed(stats) {
 	let gStats = {};
 	for(let h in stats) {
 		for(let g in stats[h]) {
-			gStats[g] ||= {groupId:g, cnt:0, volume:0, images:['','','','']};
+			gStats[g] ||= {groupId:g, cnt:0, volume:0, images:[]};
 			
 			gStats[g].cnt += stats[h][g].cnt;
 			gStats[g].volume += stats[h][g].volume;
@@ -65,10 +65,12 @@ function onStatsRefreshed(stats) {
 	
 	groups.forEach((group)=>{
 		getItemsByGroup(group.groupId, (response)=>{
-			group.images = ['','','',''];
-			for(let i=0; i<group.images.length; ++i) {
-				if(i >= response.nfts.length) break;
-				group.images[i] = `https://www.juungle.net/api/v1/nfts/icon/${group.groupId}/${response.nfts[i].tokenId}`;
+			group.images = [];
+			for(let i=0; i<4; ++i) {
+				group.images[i] = i < response.nfts.length
+					? `https://www.juungle.net/api/v1/nfts/icon/${group.groupId}/${response.nfts[i].tokenId}`
+					: 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
+				;
 			}
 		});
 	});
