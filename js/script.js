@@ -18,7 +18,7 @@ Vue.component('group-item', {
 			<div class="volume"><span class="label">Last 24hrs: </span>{{ group.volume | volume}} BCH</div>
 			<div class="cnt">/ {{ group.cnt }} trades</div>
 			<div class="images">
-				<span class="image" v-for="item in group.items" :style="{ 'background-image': 'url(' + item.image + ')' }" />
+				<span class="image" v-for="item in group.items" :style="{ 'background-image': 'url(' + item.image + ')' }" :title="item.symbol" />
 			</div>
 		</a>
 	`,
@@ -68,8 +68,8 @@ function onStatsRefreshed(stats) {
 			group.items = [];
 			for(let i=0; i<4; ++i) {
 				group.items[i] = i < response.nfts.length
-					? {image:`https://www.juungle.net/api/v1/nfts/icon/${group.groupId}/${response.nfts[i].tokenId}`}
-					: {image:'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='}
+					? {symbol:response.nfts[i].tokenSymbol, image:`https://www.juungle.net/api/v1/nfts/icon/${group.groupId}/${response.nfts[i].tokenId}`}
+					: {symbol:'', image:'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='}
 				;
 			}
 		});
