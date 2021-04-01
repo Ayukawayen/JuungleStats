@@ -67,10 +67,17 @@ function onStatsRefreshed(stats) {
 		getItemsByGroup(group.groupId, (response)=>{
 			group.items = [];
 			for(let i=0; i<4; ++i) {
-				group.items[i] = i < response.nfts.length
-					? {symbol:response.nfts[i].tokenSymbol, image:`https://www.juungle.net/api/v1/nfts/icon/${group.groupId}/${response.nfts[i].tokenId}`}
-					: {symbol:'', image:'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='}
-				;
+				if(i >= response.nfts.length) {
+					group.items[i] = {
+						image:'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==',
+						symbol:'',
+					};
+					continue;
+				}
+				group.items[i] = {
+					image:`https://www.juungle.net/api/v1/nfts/icon/${group.groupId}/${response.nfts[i].tokenId}`,
+					symbol:response.nfts[i].tokenSymbol,
+				};
 			}
 		});
 	});
