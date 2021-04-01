@@ -18,7 +18,7 @@ Vue.component('group-item', {
 			<div class="volume"><span class="label">Last 24hrs: </span>{{ group.volume | volume}} BCH</div>
 			<div class="cnt">/ {{ group.cnt }} trades</div>
 			<div class="images">
-				<span class="image" v-for="image in group.images" :style="{ 'background-image': 'url(' + image + ')' }" />
+				<span class="image" v-for="item in group.items" :style="{ 'background-image': 'url(' + item.image + ')' }" />
 			</div>
 		</a>
 	`,
@@ -47,7 +47,7 @@ function onStatsRefreshed(stats) {
 	let gStats = {};
 	for(let h in stats) {
 		for(let g in stats[h]) {
-			gStats[g] ||= {groupId:g, cnt:0, volume:0, images:[]};
+			gStats[g] ||= {groupId:g, cnt:0, volume:0, items:[]};
 			
 			gStats[g].cnt += stats[h][g].cnt;
 			gStats[g].volume += stats[h][g].volume;
@@ -65,11 +65,11 @@ function onStatsRefreshed(stats) {
 	
 	groups.forEach((group)=>{
 		getItemsByGroup(group.groupId, (response)=>{
-			group.images = [];
+			group.items = [];
 			for(let i=0; i<4; ++i) {
-				group.images[i] = i < response.nfts.length
-					? `https://www.juungle.net/api/v1/nfts/icon/${group.groupId}/${response.nfts[i].tokenId}`
-					: 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
+				group.items[i] = i < response.nfts.length
+					? {image:`https://www.juungle.net/api/v1/nfts/icon/${group.groupId}/${response.nfts[i].tokenId}`}
+					: {image:'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='}
 				;
 			}
 		});
