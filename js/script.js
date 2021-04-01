@@ -65,7 +65,11 @@ function onStatsRefreshed(stats) {
 	
 	groups.forEach((group)=>{
 		getItemsByGroup(group.groupId, (response)=>{
-			group.images = (response.nfts || []).map((item)=>(`https://www.juungle.net/api/v1/nfts/icon/${group.groupId}/${item.tokenId}`));
+			group.images = ['','','',''];
+			for(let i=0; i<group.images.length; ++i) {
+				if(i >= response.nfts.length) break;
+				group.images[i] = `https://www.juungle.net/api/v1/nfts/icon/${group.groupId}/${response.nfts[i].tokenId}`;
+			}
 		});
 	});
 
@@ -127,7 +131,7 @@ function getPurchaseds(cb) {
 }
 
 function getItemsByGroup(groupId, cb) {
-	let url = `https://www.juungle.net/api/v1/nfts?groupTokenId=${groupId}&priceSatoshisSet=true&sortBy=ts&sortDir=desc&limit=4`;
+	let url = `https://www.juungle.net/api/v1/nfts?groupTokenId=${groupId}&priceSatoshisSet=true&purchaseTxidUnset=true&sortBy=ts&sortDir=desc&limit=4`;
 	
 	var xhr=new XMLHttpRequest();
 	xhr.onreadystatechange=function(){
