@@ -17,7 +17,7 @@ Vue.component('group-item', {
 		<a class="group" :href="group.groupId | href">
 			<div class="images">
 				<span class="image" v-for="item in group.items" :style="{ 'background-image': 'url(' + item.image + ')' }" :title="item.symbol">
-					<span class="price">{{ item.price | price}}</span>
+					<span class="price" v-html="priceHtml(item.price)"></span>
 				</span>
 			</div>
 			<div class="volume"><span class="label">24h Volume: </span>{{ group.volume | bch}} BCH</div>
@@ -31,9 +31,13 @@ Vue.component('group-item', {
 		bch: function(value) {
 			return Math.floor(value/100000000) + '.' + zerofill(''+value%100000000, 8);
 		},
-		price: function(value) {
+	},
+	methods: {
+		priceHtml: function(value) {
 			if(!value || value <= 0) return '';
-			return '₿ ' + Math.floor(value/100000000) + '.' + zerofill(''+value%100000000, 8);
+			let result = '₿ ' + Math.floor(value/100000000) + '.' + zerofill(''+value%100000000, 8);
+			result = result.replace(/(0+)$/, '<span class="insign">$1</span>');
+			return result;
 		},
 	},
 })
