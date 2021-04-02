@@ -15,13 +15,13 @@ Vue.component('group-item', {
 	props: ['group'],
 	template: `
 		<a class="group" :href="group.groupId | href">
-			<div class="volume"><span class="label">24h Volume: </span>{{ group.volume | bch}} BCH</div>
-			<div class="cnt">/ {{ group.cnt }} trades</div>
 			<div class="images">
 				<span class="image" v-for="item in group.items" :style="{ 'background-image': 'url(' + item.image + ')' }" :title="item.symbol">
 					<span class="price">{{ item.price | price}}</span>
 				</span>
 			</div>
+			<div class="volume"><span class="label">24h Volume: </span>{{ group.volume | bch}} BCH</div>
+			<div class="cnt">/ {{ group.cnt }} trades</div>
 		</a>
 	`,
 	filters: {
