@@ -138,7 +138,7 @@ function refreshStats(cb) {
 
 
 function getPurchaseds(cb) {
-	let url = 'https://www.juungle.net/api/v1/nfts?purchaseTxidSet=true&sortBy=ts&sortDir=desc&limit=10000';
+	let url = 'https://www.juungle.net/api/v1/nfts?purchaseTxidSet=true&sortBy=purchaseTs&sortDir=desc&limit=500';
 	
 	var xhr=new XMLHttpRequest();
 	xhr.onreadystatechange=function(){
