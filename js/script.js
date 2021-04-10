@@ -25,7 +25,7 @@ Vue.component('group-item', {
 	`,
 	filters: {
 		href: function(value) {
-			return 'https://www.juungle.net/#/collections/' + value;
+			return 'https://www.juungle.net/#/collection/' + value;
 		},
 		bch: function(value) {
 			return Math.floor(value/100000000) + '.' + zerofill(''+value%100000000, 8);
