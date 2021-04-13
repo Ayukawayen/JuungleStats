@@ -120,6 +120,8 @@ function refreshStats(cb) {
 		}
 		
 		response.nfts.forEach((item)=>{
+			if(!item.purchaseTs) return;
+			
 			let h = item.purchaseTs.substr(0,13);
 			if(!toRefreshs[h]) return;
 			
